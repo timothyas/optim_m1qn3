@@ -147,9 +147,12 @@ c--   Write the header.
 #ifdef ALLOW_CTRL_WETV
       write( funit ) (nWetvGlobal(k), k=1,nr)
 #endif
-#ifdef ALLOW_SHIFWFLX_CONTROL
+#if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
       write(funit) (nWetiGlobal(k),   k=1,nr)
 c     write(funit) nWetiGlobal(1)
+#endif
+#ifdef ALLOW_SHI2D_CONTROL
+      write(funit) (nWetuGlobal(k),   k=1,nr)
 #endif
 
 c     Add OBCS Mask information into the header section for optimization.
@@ -196,9 +199,13 @@ CML         write( funit ) bj
            cbuffindex = nWetwGlobal(k)
           else if (ncvargrd(icvar) .eq. 'v') then
            cbuffindex = nWetvGlobal(k)
-#ifdef ALLOW_SHIFWFLX_CONTROL
+#if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
           else if (ncvargrd(icvar) .eq. 'i') then
            cbuffindex = nWetiGlobal(k)
+#endif
+#ifdef ALLOW_SHI2D_CONTROL
+          else if (ncvargrd(icvar) .eq. 'u') then
+           cbuffindex = nWetuGlobal(k)
 #endif
 c     O.B. points have the grid mask "m".
           else if (ncvargrd(icvar) .eq. 'm') then

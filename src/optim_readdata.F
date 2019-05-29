@@ -155,9 +155,12 @@ C     filei/jG are dummy values and not used
 #ifdef ALLOW_CTRL_WETV
       read( funit ) (nWetvGlobal(k), k=1,nr)
 #endif
-#ifdef ALLOW_SHIFWFLX_CONTROL
+#if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
       read(funit) (nWetiGlobal(k), k=1,nr)
 c     read(funit) nWetiGlobal(1)
+#endif
+#ifdef ALLOW_SHI2D_CONTROL
+      read(funit) (nWetuGlobal(k), k=1,nr)
 #endif
 
 cgg(    Add OBCS Mask information into the header section for optimization.
@@ -199,8 +202,11 @@ cgg)
        print *, prefix, 'nWetsGlobal ', (nWetsGlobal(k), k=1,nr)
        print *, prefix, 'nWetwGlobal ', (nWetwGlobal(k), k=1,nr)
        print *, prefix, 'nWetvGlobal ', (nWetvGlobal(k), k=1,nr)
-#ifdef ALLOW_SHIFWFLX_CONTROL
+#ifdef ALLOW_SHIFWFLX_CONTROL || (defined ALLOW_SHI2D_CONTROL)
        print *, prefix, 'nWetiGlobal ', (nWetiGlobal(k), k=1,nr)
+#endif
+#ifdef ALLOW_SHI2D_CONTROL
+       print *, prefix, 'nWetuGlobal ', (nWetiGlobal(k), k=1,nr)
 #endif
 #ifdef ALLOW_OBCSN_CONTROL
        do iobcs=1,nobcs
@@ -290,7 +296,7 @@ cph           do bi = 1,nsx
               cbuffindex = nWetwGlobal(k)
              else if (ncvargrd(icvar) .eq. 'v') then
               cbuffindex = nWetvGlobal(k)
-#ifdef ALLOW_SHIFWFLX_CONTROL
+#ifdef ALLOW_SHIFWFLX_CONTROL || (defined ALLOW_SHI2D_CONTROL)
              else if (ncvargrd(icvar) .eq. 'i') then
               cbuffindex = nWetiGlobal(k)
 #endif
