@@ -159,9 +159,6 @@ C     filei/jG are dummy values and not used
       read(funit) (nWetiGlobal(k), k=1,nr)
 c     read(funit) nWetiGlobal(1)
 #endif
-#ifdef ALLOW_SHI2D_CONTROL
-      read(funit) (nWetuGlobal(k), k=1,nr)
-#endif
 
 cgg(    Add OBCS Mask information into the header section for optimization.
 CML#if (defined (ALLOW_CTRL) && defined (ALLOW_OBCS))
@@ -204,9 +201,6 @@ cgg)
        print *, prefix, 'nWetvGlobal ', (nWetvGlobal(k), k=1,nr)
 #if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
        print *, prefix, 'nWetiGlobal ', (nWetiGlobal(k), k=1,nr)
-#endif
-#ifdef ALLOW_SHI2D_CONTROL
-       print *, prefix, 'nWetuGlobal ', (nWetiGlobal(k), k=1,nr)
 #endif
 #ifdef ALLOW_OBCSN_CONTROL
        do iobcs=1,nobcs

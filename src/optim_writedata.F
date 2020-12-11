@@ -10,7 +10,7 @@ C     CTRL_OPTIONS affects maxcvars and may define ALLOW_OBCS?_CONTROL
      I                       printlists,
      I                       ff,
      I                       vv
-     &                     ) 
+     &                     )
 
 c     ==================================================================
 c     SUBROUTINE optim_writedata
@@ -116,7 +116,7 @@ c--         Generate file name and open the file.
       print *, prefix, 'jG         ', bjG
       print *, prefix, 'nsx        ', nsx
       print *, prefix, 'nsy        ', nsy
-         
+
       if ( printlists ) then
        print *, prefix, 'nWetcGlobal ', (nWetcGlobal(k), k=1,nr)
        print *, prefix, 'nWetsGlobal ', (nWetsGlobal(k), k=1,nr)
@@ -151,9 +151,6 @@ c--   Write the header.
       write(funit) (nWetiGlobal(k),   k=1,nr)
 c     write(funit) nWetiGlobal(1)
 #endif
-#ifdef ALLOW_SHI2D_CONTROL
-      write(funit) (nWetuGlobal(k),   k=1,nr)
-#endif
 
 c     Add OBCS Mask information into the header section for optimization.
 #ifdef ALLOW_OBCSN_CONTROL
@@ -168,7 +165,7 @@ c     Add OBCS Mask information into the header section for optimization.
 #ifdef ALLOW_OBCSE_CONTROL
       write(funit) ((nWetobcseGlo(k,iobcs), k=1,nr),iobcs= 1,nobcs)
 #endif
-      
+
       write( funit ) (ncvarindex(i), i=1,maxcvars)
       write( funit ) (ncvarrecs(i),  i=1,maxcvars)
       write( funit ) (ncvarxmax(i),  i=1,maxcvars)
@@ -203,10 +200,6 @@ CML         write( funit ) bj
           else if (ncvargrd(icvar) .eq. 'i') then
            cbuffindex = nWetiGlobal(k)
 #endif
-#ifdef ALLOW_SHI2D_CONTROL
-          else if (ncvargrd(icvar) .eq. 'u') then
-           cbuffindex = nWetuGlobal(k)
-#endif
 c     O.B. points have the grid mask "m".
           else if (ncvargrd(icvar) .eq. 'm') then
 c     From "icvrec", calculate what iobcs must be.
@@ -218,7 +211,7 @@ c     From "icvrec", calculate what iobcs must be.
 #endif
 #ifdef ALLOW_OBCSS_CONTROL
            if (icvar .eq. 12) cbuffindex = nWetobcssGlo(k,iobcs)
-#endif 
+#endif
 #ifdef ALLOW_OBCSW_CONTROL
            if (icvar .eq. 13) cbuffindex = nWetobcswGlo(k,iobcs)
 #endif
