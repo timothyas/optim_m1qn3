@@ -33,13 +33,12 @@ CPP             = cat $< | /lib/cpp -P -traditional
 # on SUNOS
 # CPP		= cat $< | /usr/ccs/lib/cpp
 
-MITGCMDIR=${mitgcm}
-#MAKEDEPEND=makedepend
+MAKEDEPEND=makedepend
 # this works when you done have a makedepend
-MAKEDEPEND=${MITGCMDIR}/tools/xmakedepend
+#MAKEDEPEND=../../MITgcm/tools/xmakedepend
 
 INCLUDEDIRS     = -I.				\
-		  		  #-I../code_ad
+		  -I../../MITgcm/verification/tutorial_global_oce_optim/build
 
 LIBDIRS         = 
 LIBS            = 
