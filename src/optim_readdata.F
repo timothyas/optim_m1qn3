@@ -196,13 +196,13 @@ cgg)
       print *, prefix, 'filejG ', filejG
       print *, prefix, 'filensx ', filensx
       print *, prefix, 'filensy ', filensy
-         
+
       if (lheaderonly) then
        print *, prefix, 'nWetcGlobal ', (nWetcGlobal(k), k=1,nr)
        print *, prefix, 'nWetsGlobal ', (nWetsGlobal(k), k=1,nr)
        print *, prefix, 'nWetwGlobal ', (nWetwGlobal(k), k=1,nr)
        print *, prefix, 'nWetvGlobal ', (nWetvGlobal(k), k=1,nr)
-#ifdef ALLOW_SHIFWFLX_CONTROL || (defined ALLOW_SHI2D_CONTROL)
+#if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
        print *, prefix, 'nWetiGlobal ', (nWetiGlobal(k), k=1,nr)
 #endif
 #ifdef ALLOW_SHI2D_CONTROL
@@ -250,7 +250,7 @@ cph       print*,'              input optim  cycle = ',filenopt
 cph       print*
 cph       stop   ' ... stopped in READ_HEADER.'
 cph      endif
-      
+
       if ( (fileiG .ne. biG) .or. (filejG .ne. bjG) ) then
        print*
        print*, prefix, 'Tile indices of loop and data do not match.'
@@ -261,7 +261,7 @@ cph      endif
        print*
        stop   ' ... stopped in OPTIM_READDATA.'
       endif
-      
+
       if ( (filensx .ne. nsx) .or. (filensy .ne. nsy) ) then
        print*
        print*, prefix, ' Numbers of tiles do not match.'
@@ -296,7 +296,7 @@ cph           do bi = 1,nsx
               cbuffindex = nWetwGlobal(k)
              else if (ncvargrd(icvar) .eq. 'v') then
               cbuffindex = nWetvGlobal(k)
-#ifdef ALLOW_SHIFWFLX_CONTROL || (defined ALLOW_SHI2D_CONTROL)
+#if (defined ALLOW_SHIFWFLX_CONTROL) || (defined ALLOW_SHI2D_CONTROL)
              else if (ncvargrd(icvar) .eq. 'i') then
               cbuffindex = nWetiGlobal(k)
 #endif
@@ -311,7 +311,7 @@ cgg    From "icvrec", calculate what iobcs must be.
 #endif
 #ifdef ALLOW_OBCSS_CONTROL
               if (icvar .eq. 12) cbuffindex = nWetobcssGlo(k,iobcs)
-#endif 
+#endif
 #ifdef ALLOW_OBCSW_CONTROL
               if (icvar .eq. 13) cbuffindex = nWetobcswGlo(k,iobcs)
 #endif
@@ -325,7 +325,7 @@ cgg)
               print *, ' ERROR:'
               print *, ' There are at least ', icvoffset+cbuffindex,
      &             ' records in '//fname(1:28)//'.'
-              print *, ' This is more than expected from nvarlength =', 
+              print *, ' This is more than expected from nvarlength =',
      &             nvarlength, '.'
               print *, ' Something is wrong in the computation of '//
      &             'the wet points or'
@@ -353,12 +353,12 @@ cph          enddo
          enddo
         endif
        enddo
-         
+
       else
 
 c--   Assign the number of control variables.
        nn = nvarlength
-         
+
       endif
 
       close( funit )
